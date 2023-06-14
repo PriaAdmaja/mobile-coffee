@@ -46,7 +46,6 @@ const Home = () => {
             if (category) {
                 url = `${API_URL}/products?name=${debouncedSearch}&category=${category}&limit=5`
             }
-            console.log(url);
             axios.get(url).then(res => setProduct(res.data))
                 .catch(err =>
                     Toast.show({

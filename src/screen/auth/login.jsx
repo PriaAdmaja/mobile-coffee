@@ -2,6 +2,7 @@ import { Image, Pressable, Text, TextInput, TouchableOpacity, View, } from "reac
 import { useNavigation } from "@react-navigation/native"
 import { useDispatch } from "react-redux"
 import { API_URL } from 'react-native-dotenv'
+import messaging from '@react-native-firebase/messaging';
 
 import startStyle from '../../styles/start'
 import authStyle from '../../styles/auth'
@@ -35,9 +36,22 @@ const Login = () => {
             dispatch(userInfoAction.submitAvatar(result.data.profilePict))
             dispatch(userInfoAction.submitUserId(result.data.id))
             dispatch(userInfoAction.submitRolesId(result.data.roles_id))
+           
+            await messaging().registerDeviceForRemoteMessages();
+            
+            const fcmToken = await messaging().getToken();
+            const patchBody = {
+                fcmToken
+            }
+            const userPatchUrl = `${API_URL}/users/${result.data.id}`
+            await axios.patch(userPatchUrl, patchBody, {
+                headers: {
+                    'Authorization' : `Bearer ${result.data.token}`
+                }
+            })
+
             const urlProfile = `${API_URL}/users/${result.data.id}`
             const profile = await axios.get(urlProfile)
-
             dispatch(userInfoAction.submitAvatar(profile.data.data[0].pict_url))
             dispatch(userInfoAction.submitDisplayName(profile.data.data[0].display_name))
             dispatch(userInfoAction.submitEmail(profile.data.data[0].email))
@@ -51,7 +65,7 @@ const Login = () => {
         } catch (error) {
             Toast.show({
                 type: 'error',
-                text1: error.response.data.msg
+                text1: error.response.data?.msg
             })
         } finally {
             setIsLoading(false)
