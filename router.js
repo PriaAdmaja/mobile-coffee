@@ -152,6 +152,12 @@ const StactNavigator = () => {
                         options={{
                             headerShown: false,
                         }} />
+                    <Screen
+                        name='Order'
+                        component={CustomerOrder}
+                        options={{
+                            headerShown: false,
+                        }} />
                 </>
             }
         </Navigator>

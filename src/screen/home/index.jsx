@@ -1,4 +1,4 @@
-import { View, Text, Image, TextInput, ScrollView, TouchableOpacity, Pressable } from 'react-native'
+import { View, Text, Image, TextInput, ScrollView, TouchableOpacity, Modal, Pressable } from 'react-native'
 import { useEffect, useState } from 'react'
 import axios from 'axios'
 import { Toast } from "react-native-toast-message/lib/src/Toast";
@@ -11,12 +11,14 @@ import { productIdAction } from '../../redux/slices/productId'
 import { DrawerActions, useNavigation } from '@react-navigation/native'
 import { filterAction } from '../../redux/slices/filter'
 import useDebounce from '../../utils/useDebounce'
+import DrawerOnModal from '../../components/DrawerOnModal';
 
 const Home = () => {
     const [product, setProduct] = useState([])
     const [category, setCategory] = useState(null)
     const [isLoading, setIsLoading] = useState(false)
     const [menuName, setMenuName] = useState('')
+    const [modalDrawer, setModalDrawer] = useState(false)
 
     const dispatch = useDispatch()
     const { rolesId } = useSelector(state => state.userInfo)
@@ -67,14 +69,18 @@ const Home = () => {
         navigation.navigate('category')
     }
 
+    const closeModal = (e) => {
+        setModalDrawer(false)
+    }
+
     if (!product) return <Loader.Loader isLoading={isLoading} />
 
     return (
         <View style={style.homeView}>
             <View style={style.topNavbar}>
-                <View style={{opacity: 0}}>
+                <TouchableOpacity onPress={() => setModalDrawer(true)}>
                     <Image source={require('../../assets/icons/menu.png')} />
-                </View>
+                </TouchableOpacity>
                 <TouchableOpacity onPressOut={() => navigation.navigate('cart')}>
                     <Image source={require('../../assets/icons/shopping-cart.png')} />
                 </TouchableOpacity>
@@ -132,6 +138,13 @@ const Home = () => {
                     <Text style={style.textButton}>Add Product</Text>
                 </TouchableOpacity>
             </View>
+            <Modal animationType='slide' visible={modalDrawer} transparent={true} style={{backgroundColor: 'rgba(0, 0, 0, 0.3)'}}>
+                <Pressable style={{flex: 1}} onPress={(e) => closeModal(e)}>
+                    <View style={{ flex: 1, backgroundColor: '#eaeaea', width: '80%' }} >
+                        <DrawerOnModal />
+                    </View>
+                </Pressable>
+            </Modal>
             <Toast
                 position='top'
                 bottomOffset={20}

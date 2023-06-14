@@ -97,7 +97,7 @@ const ProductDetail = () => {
                 })
             }
 
-            formData.append('name', data.name)
+            formData.append('productName', data.name)
             formData.append('price', data.price)
             formData.append('description', data.description)
 
@@ -113,6 +113,7 @@ const ProductDetail = () => {
                 text1: result.data.msg
             });
             setEdit(false)
+            navigation.goBack()
         } catch (error) {
             Toast.show({
                 type: 'error',
@@ -165,8 +166,6 @@ const ProductDetail = () => {
                     <Image source={require('../../assets/icons/shopping-cart.png')} />
                 </TouchableOpacity>
             </View>
-
-
             <View style={{ flex: 1, position: 'relative' }}>
                 <KeyboardAvoidingView style={{ flex: 1 }} behavior={(Platform.OS === 'ios') ? "padding" : null}>
                     <ScrollView>
