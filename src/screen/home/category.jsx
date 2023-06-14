@@ -21,6 +21,7 @@ const Category = () => {
     const [sortMdl, setSortMdl] = useState(sort)
     const [search, setSearch] = useState()
     const [categoryMdl, setCategoryMdl] = useState(category)
+    const [pageLoad, setPageLoad] = useState(false)
     const dispatch = useDispatch()
     const navigation = useNavigation()
 
@@ -36,16 +37,16 @@ const Category = () => {
             // }
             // categoryMdl !== null && sortMdl !== null ? url += `&sortBy=${sortMdl}&page=1` : sortMdl !== null ?  url += `?sort=${sortMdl}&page=1` : categoryMdl !== null ?  url += `&page=1` : url += `?page=1`
             const query = []
-            if(categoryMdl) {
+            if (categoryMdl) {
                 query.push(`category=${categoryMdl}`)
             }
-            if(sortMdl) {
+            if (sortMdl) {
                 query.push(`sortBy=${sortMdl}`)
             }
-            if(page) {
+            if (page) {
                 query.push(`page=${page}`)
             }
-            if(query.length > 0) {
+            if (query.length > 0) {
                 url += `?${query.join('&')}`
             }
             console.log(url);
@@ -57,7 +58,6 @@ const Category = () => {
         } finally {
             setIsLoading(false)
         }
-
     }
 
     const resetFilter = async () => {
@@ -82,7 +82,8 @@ const Category = () => {
 
     const nextPage = async () => {
         try {
-            if(!meta) {
+            setPageLoad(true)
+            if (!meta) {
                 return
             }
             let url = `${API_URL}${meta}`
@@ -93,6 +94,8 @@ const Category = () => {
             setProduct(newData)
         } catch (error) {
             console.log(error);
+        } finally {
+            setPageLoad(false)
         }
     }
 
@@ -102,19 +105,19 @@ const Category = () => {
             setIsLoading(true)
             let url = `${API_URL}/products`
             const query = []
-            if(search) {
+            if (search) {
                 query.push(`name=${search}`)
             }
-            if(category) {
+            if (category) {
                 query.push(`category=${category}`)
             }
-            if(sort) {
+            if (sort) {
                 query.push(`sortBy=${sort}`)
             }
-            if(page) {
+            if (page) {
                 query.push(`limit=10&page=${page}`)
             }
-            if(query.length > 0) {
+            if (query.length > 0) {
                 url += `?${query.join('&')}`
             }
             console.log(url);
@@ -142,69 +145,76 @@ const Category = () => {
             </View>
             <Text style={style.title}>{title}</Text>
             <View style={style.searchBar}>
-                            <Image style={style.searchIcon} source={require('../../assets/icons/search.png')} />
-                            <TextInput placeholder='Search' value={search} placeholderTextColor={'#000000'} onChangeText={text => setSearch(text)} style={{ color: '#000000' }} />
-                        </View>
+                <Image style={style.searchIcon} source={require('../../assets/icons/search.png')} />
+                <TextInput placeholder='Search' value={search} placeholderTextColor={'#000000'} onChangeText={text => setSearch(text)} style={{ color: '#000000' }} />
+            </View>
             <TouchableOpacity style={style.filterBtn} onPress={() => setShowFIlter(true)}>
                 <Text style={style.filterText}>Filter</Text>
             </TouchableOpacity>
             {isLoading ? <Loader.Loader isLoading={true} />
-                : product.length === 0 ? 
-                <View style={{justifyContent: 'center'}}>
-                    <Text style={{color: '#000000', textAlign: 'center', marginTop: 50}}>Product not found</Text>
-                </View>
-                : <FlatList
-                    data={product}
-                    numColumns={2}
-                    columnWrapperStyle={style.flatList}
-                    onEndReachedThreshold={2}
-                    onEndReached={nextPage}
-                    renderItem={({ item }) => {
-                        return (
-                            <TouchableOpacity style={style.productCard} key={item.id} onPress={() => viewDetail(item.id)}>
-                                <View style={style.productImage}>
-                                    <Image source={item.pict_url ?  { uri: `${item.pict_url}` } : require('../../assets/images/no-product.jpg')} style={style.image} />
-                                </View>
-                                <View style={style.text}>
-                                    <Text style={style.productName}>{item.name}</Text>
-                                    <Text style={style.price}>IDR {Number(item.price).toLocaleString()}</Text>
-                                </View>
-                            </TouchableOpacity>
-                        )
-                    }}
-                />
+                : product.length === 0 ?
+                    <View style={{ justifyContent: 'center' }}>
+                        <Text style={{ color: '#000000', textAlign: 'center', marginTop: 50 }}>Product not found</Text>
+                    </View>
+                    :
+
+                    <FlatList
+                        data={product}
+                        numColumns={2}
+                        columnWrapperStyle={style.flatList}
+                        // onEndReachedThreshold={2}
+                        onEndReached={nextPage}
+                        // onEndReached={() => console.log('load')}
+                        renderItem={({ item }) => {
+                            return (
+                                <TouchableOpacity style={style.productCard} key={item.id} onPress={() => viewDetail(item.id)}>
+                                    <View style={style.productImage}>
+                                        <Image source={item.pict_url ? { uri: `${item.pict_url}` } : require('../../assets/images/no-product.jpg')} style={style.image} />
+                                    </View>
+                                    <View style={style.text}>
+                                        <Text style={style.productName}>{item.name}</Text>
+                                        <Text style={style.price}>IDR {Number(item.price).toLocaleString()}</Text>
+                                    </View>
+                                </TouchableOpacity>
+                            )
+                        }}
+                    />
+
             }
+            <View style={{paddingVertical: 20, alignItems: 'center'}}>
+                <Loader.Loader isLoading={pageLoad} />
+            </View>
             <Modal visible={showFilter} animationType='slide' transparent={true}>
-                <View style={{backgroundColor: 'rgba(0, 0, 0, 0.3)', flex: 1}}>
+                <View style={{ backgroundColor: 'rgba(0, 0, 0, 0.3)', flex: 1 }}>
                     <View style={style.modalView}>
                         <Text style={style.modalSubtitle}>Sort :</Text>
                         <View style={style.filterWrap}>
                             <TouchableOpacity style={sortMdl === null ? style.filterBtnActive : style.filterBtn} onPress={() => setSortMdl(null)}>
-                                <Text style={{color: '#000000'}}>A-Z</Text>
+                                <Text style={{ color: '#000000' }}>A-Z</Text>
                             </TouchableOpacity>
                             <TouchableOpacity style={sortMdl === 'nameDesc' ? style.filterBtnActive : style.filterBtn} onPress={() => setSortMdl('nameDesc')}>
-                                <Text style={{color: '#000000'}}>Z-A</Text>
+                                <Text style={{ color: '#000000' }}>Z-A</Text>
                             </TouchableOpacity>
                             <TouchableOpacity style={sortMdl === 'cheapest' ? style.filterBtnActive : style.filterBtn} onPress={() => setSortMdl('cheapest')}>
-                                <Text style={{color: '#000000'}}>Price Asc</Text>
+                                <Text style={{ color: '#000000' }}>Price Asc</Text>
                             </TouchableOpacity>
                             <TouchableOpacity style={sortMdl === 'priciest' ? style.filterBtnActive : style.filterBtn} onPress={() => setSortMdl('priciest')}>
-                                <Text style={{color: '#000000'}}>Price Desc</Text>
+                                <Text style={{ color: '#000000' }}>Price Desc</Text>
                             </TouchableOpacity>
                         </View>
                         <Text style={style.modalSubtitle}>Category :</Text>
                         <View style={style.filterWrap}>
                             <TouchableOpacity style={categoryMdl === null ? style.filterBtnActive : style.filterBtn} onPress={() => setCategoryMdl(null)}>
-                                <Text style={{color: '#000000'}}>All menu</Text>
+                                <Text style={{ color: '#000000' }}>All menu</Text>
                             </TouchableOpacity>
                             <TouchableOpacity style={categoryMdl === 'coffee' ? style.filterBtnActive : style.filterBtn} onPress={() => setCategoryMdl('coffee')}>
-                                <Text style={{color: '#000000'}}>Coffee</Text>
+                                <Text style={{ color: '#000000' }}>Coffee</Text>
                             </TouchableOpacity>
                             <TouchableOpacity style={categoryMdl === 'non coffee' ? style.filterBtnActive : style.filterBtn} onPress={() => setCategoryMdl('non coffee')}>
-                                <Text style={{color: '#000000'}}>Non coffee</Text>
+                                <Text style={{ color: '#000000' }}>Non coffee</Text>
                             </TouchableOpacity>
                             <TouchableOpacity style={categoryMdl === 'foods' ? style.filterBtnActive : style.filterBtn} onPress={() => setCategoryMdl('foods')}>
-                                <Text style={{color: '#000000'}}>Foods</Text>
+                                <Text style={{ color: '#000000' }}>Foods</Text>
                             </TouchableOpacity>
                         </View>
                         <TouchableOpacity style={style.selectFilterBtn} onPress={saveFilter}>
