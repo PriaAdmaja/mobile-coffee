@@ -59,15 +59,15 @@ You can download APK file [here](https://drive.google.com/drive/folders/16PiUqnp
 ## Screenshots
 
 <p float="left">
-  <img src="https://user-images.githubusercontent.com/109842306/245978165-11ac0be9-3295-4ed4-bd78-49b39b295995.jpeg" width="300" />
-  <img src="https://user-images.githubusercontent.com/109842306/245978148-0801e33c-c12e-4b19-8647-030c714a520b.jpeg" width="300" /> 
-  <img src="https://user-images.githubusercontent.com/109842306/245978159-35d72b9c-1cbe-4a28-9431-576ba165926d.jpeg" width="300" />
+  <img src="https://user-images.githubusercontent.com/109842306/245978165-11ac0be9-3295-4ed4-bd78-49b39b295995.jpeg" width="270" />
+  <img src="https://user-images.githubusercontent.com/109842306/245978148-0801e33c-c12e-4b19-8647-030c714a520b.jpeg" width="270" /> 
+  <img src="https://user-images.githubusercontent.com/109842306/245978159-35d72b9c-1cbe-4a28-9431-576ba165926d.jpeg" width="270" />
 </p>
 
 <p float="left">
-  <img src="https://user-images.githubusercontent.com/109842306/245978163-01f8c5e2-b8d1-44de-aa0b-269db3ac8db4.jpeg" width="300" />
-  <img src="https://user-images.githubusercontent.com/109842306/245978167-de6aaa8d-4233-4c30-b10a-a75737fdd0da.jpeg" width="300" /> 
-  <img src="https://user-images.githubusercontent.com/109842306/245978169-098082c7-7e7c-477f-add4-e4dbe98d1f95.jpeg" width="300" />
+  <img src="https://user-images.githubusercontent.com/109842306/245978163-01f8c5e2-b8d1-44de-aa0b-269db3ac8db4.jpeg" width="270" />
+  <img src="https://user-images.githubusercontent.com/109842306/245978167-de6aaa8d-4233-4c30-b10a-a75737fdd0da.jpeg" width="270" /> 
+  <img src="https://user-images.githubusercontent.com/109842306/245978169-098082c7-7e7c-477f-add4-e4dbe98d1f95.jpeg" width="270" />
 </p>
 
 
