@@ -46,8 +46,9 @@ Open new terminal
 
 To run this project, you will need to add the following environment variables to your .env file
 
-`API_URL` = Your REST API
-
+```bash
+API_URL = Your REST API
+```
 
 
 ## Demo
