@@ -1,7 +1,7 @@
 
 # Mobile Coffee-Shop
 
-Mobile App version of Coffee-Shop web project. Build with React Native
+Mobile App version of Coffee-Shop web project. Can login as customer or admin only with this one app. Available on android app version. You can clone this repository to modify with your own needs.
 
 
 ## Tech Stack
@@ -10,6 +10,7 @@ Mobile App version of Coffee-Shop web project. Build with React Native
 - [Redux](https://redux.js.org/)
 - [Axios](https://axios-http.com/)
 - [React Navigation](https://reactnavigation.org/)
+- [Notifee](https://notifee.app/)
 - etc
 
 
@@ -56,9 +57,17 @@ You can download APK file [here](https://drive.google.com/drive/folders/16PiUqnp
 
 ## Screenshots
 
-![Dashboard](https://user-images.githubusercontent.com/109842306/245359211-9b34755a-03b3-4235-adcc-05883f85c6e9.jpg)
+<p float="left">
+  <img src="https://user-images.githubusercontent.com/109842306/245978165-11ac0be9-3295-4ed4-bd78-49b39b295995.jpeg" width="300" />
+  <img src="https://user-images.githubusercontent.com/109842306/245978148-0801e33c-c12e-4b19-8647-030c714a520b.jpeg" width="300" /> 
+  <img src="https://user-images.githubusercontent.com/109842306/245978159-35d72b9c-1cbe-4a28-9431-576ba165926d.jpeg" width="300" />
+</p>
 
-![Edit Profile](https://user-images.githubusercontent.com/109842306/245359240-34182535-7b88-4136-b8d5-84e9498178c3.jpg)
+<p float="left">
+  <img src="https://user-images.githubusercontent.com/109842306/245978163-01f8c5e2-b8d1-44de-aa0b-269db3ac8db4.jpeg" width="300" />
+  <img src="https://user-images.githubusercontent.com/109842306/245978167-de6aaa8d-4233-4c30-b10a-a75737fdd0da.jpeg" width="300" /> 
+  <img src="https://user-images.githubusercontent.com/109842306/245978169-098082c7-7e7c-477f-add4-e4dbe98d1f95.jpeg" width="300" />
+</p>
 
 
 ## Authors
@@ -71,7 +80,7 @@ You can download APK file [here](https://drive.google.com/drive/folders/16PiUqnp
 Here are some related projects
 
 - [Backend Coffee-Shop](https://github.com/PriaAdmaja/backend-coffee_shop)
-- [Frontend Coffee-Shop](https://github.com/PriaAdmaja/client-coffee-shop-react.git)
+- [Frontend Coffee-Shop (Website)](https://github.com/PriaAdmaja/client-coffee-shop-react.git)
 
 
 
